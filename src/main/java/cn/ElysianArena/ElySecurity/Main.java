@@ -7,6 +7,7 @@ import cn.ElysianArena.ElySecurity.commands.OPCommand;
 import cn.ElysianArena.ElySecurity.core.OPManager;
 import cn.ElysianArena.ElySecurity.security.AntiSpam;
 import cn.ElysianArena.ElySecurity.security.ProhibitedWords;
+import cn.ElysianArena.ElySecurity.utils.MetricsLite;
 import cn.nukkit.plugin.PluginBase;
 
 import java.sql.DriverManager;
@@ -33,10 +34,6 @@ public class Main extends PluginBase {
 
     @Override
     public void onEnable() {
-        saveResource("config.yml");
-        saveResource("lang/zh_CN.yml");
-        saveResource("lang/en_US.yml");
-        saveResource("prohibited-words.yml");
         this.configManager = new ConfigManager(this);
         this.languageManager = new LanguageManager(this);
         this.eventManager = new EventManager(this);
@@ -48,12 +45,18 @@ public class Main extends PluginBase {
 
         getServer().getCommandMap().register("op", new OPCommand(this, opManager));
 
-        getLogger().info("  _____ _       ____                       _ _         \n" +
+        try {
+            new MetricsLite(this, 27970);
+        } catch (Throwable ignore) { }
+
+        getLogger().info(" " +
+                "  _____ _       ____                       _ _         \n" +
                 " | ____| |_   _/ ___|  ___  ___ _   _ _ __(_) |_ _   _ \n" +
                 " |  _| | | | | \\___ \\ / _ \\/ __| | | | '__| | __| | | |\n" +
                 " | |___| | |_| |___) |  __/ (__| |_| | |  | | |_| |_| |\n" +
                 " |_____|_|\\__, |____/ \\___|\\___|\\__,_|_|  |_|\\__|\\__, |\n" +
-                "          |___/                                  |___/ ");
+                "          |___/                                  |___/ " +
+                "Author: NemoCat");
     }
 
     @Override
@@ -61,7 +64,8 @@ public class Main extends PluginBase {
         if (opManager != null) {
             opManager.closeConnections();
         }
-        getLogger().info("  _____ _       ____                       _ _         \n" +
+        getLogger().info(" " +
+                "  _____ _       ____                       _ _         \n" +
                 " | ____| |_   _/ ___|  ___  ___ _   _ _ __(_) |_ _   _ \n" +
                 " |  _| | | | | \\___ \\ / _ \\/ __| | | | '__| | __| | | |\n" +
                 " | |___| | |_| |___) |  __/ (__| |_| | |  | | |_| |_| |\n" +
