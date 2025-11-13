@@ -59,18 +59,25 @@ public class AntiSpam implements SecurityModule, Listener {
     private boolean checkSpam(String playerName, String message) {
         // 检查消息间隔
         if (checkMessageInterval(playerName)) {
+            if (plugin.getConfigManager().getConfig().getBoolean("anti-spam.warning-message", true)) {
+                plugin.getLanguageManager().getMessage("anti_spam.warning");
+            }
             return true;
         }
 
         // 检查信息熵
         if (checkEntropy(message)) {
-            plugin.getLanguageManager().getMessage("anti_spam.warning");
+            if (plugin.getConfigManager().getConfig().getBoolean("anti-spam.warning-message", true)) {
+                plugin.getLanguageManager().getMessage("anti_spam.warning");
+            }
             return true;
         }
 
         // 检查相似度
         if (checkSimilarity(playerName, message)) {
-            plugin.getLanguageManager().getMessage("anti_spam.similarity_warning");
+            if (plugin.getConfigManager().getConfig().getBoolean("anti-spam.warning-message", true)) {
+                plugin.getLanguageManager().getMessage("anti_spam.similarity_warning");
+            }
             return true;
         }
 

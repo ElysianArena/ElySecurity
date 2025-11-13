@@ -135,6 +135,15 @@ public class ProhibitedWords implements SecurityModule, Listener {
                 result.setSource("baidu");
                 result.setConfidence(baiduResult.confidence);
                 result.setMessage(baiduResult.message);
+                
+                // 如果启用了自动添加百度违禁词到本地词库
+                if (plugin.getConfigManager().getConfig().getBoolean("prohibited-words.auto-add-baidu-words", false)) {
+                    for (String word : baiduResult.violatedWords) {
+                        if (!localProhibitedWords.contains(word)) {
+                            addLocalWord(word);
+                        }
+                    }
+                }
             }
         }
 

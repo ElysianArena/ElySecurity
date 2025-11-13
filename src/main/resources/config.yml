@@ -22,6 +22,8 @@ prohibited-words:
   punishment: "warning"
   # 禁言时长(秒)
   mute-duration: 300
+  # 是否自动将百度命中的违禁词添加到本地词库
+  auto-add-baidu-words: false
 
 # 百度API配置
 baidu-api:
@@ -40,9 +42,10 @@ mysql:
 
 # Redis配置
 redis:
-  enabled: true
+  enabled: false
   host: "localhost"
   port: 6379
+  password: ""
   timeout: 2000
   max-total: 10
   max-idle: 5

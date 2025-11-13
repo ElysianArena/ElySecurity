@@ -27,6 +27,7 @@ public class OPManager {
     private boolean redisEnabled;
     private String redisHost;
     private int redisPort;
+    private String redisPassword;
     private int redisTimeout;
     private int redisMaxTotal;
     private int redisMaxIdle;
@@ -55,6 +56,7 @@ public class OPManager {
         this.redisEnabled = plugin.getConfig().getBoolean("redis.enabled", true);
         this.redisHost = plugin.getConfig().getString("redis.host", "localhost");
         this.redisPort = plugin.getConfig().getInt("redis.port", 6379);
+        this.redisPassword = plugin.getConfig().getString("redis.password", "");
         this.redisTimeout = plugin.getConfig().getInt("redis.timeout", 2000);
         this.redisMaxTotal = plugin.getConfig().getInt("redis.max-total", 10);
         this.redisMaxIdle = plugin.getConfig().getInt("redis.max-idle", 5);
@@ -90,7 +92,11 @@ public class OPManager {
             config.setMaxIdle(redisMaxIdle);
             config.setMinIdle(redisMinIdle);
             // 使用从配置文件读取的Redis配置
-            this.jedisPool = new JedisPool(config, redisHost, redisPort, redisTimeout);
+            if (redisPassword != null && !redisPassword.isEmpty()) {
+                this.jedisPool = new JedisPool(config, redisHost, redisPort, redisTimeout, redisPassword);
+            } else {
+                this.jedisPool = new JedisPool(config, redisHost, redisPort, redisTimeout);
+            }
             
             // 测试连接
             try (Jedis jedis = jedisPool.getResource()) {

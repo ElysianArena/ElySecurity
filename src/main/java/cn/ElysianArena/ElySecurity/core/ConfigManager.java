@@ -51,7 +51,10 @@ public class ConfigManager {
         // 加载违禁词配置
         this.prohibitedWordsConfig = new Config(new File(plugin.getDataFolder(), "prohibited-words.yml"), Config.YAML);
 
-        // 保存默认配置
+        // 优先使用saveResource保存默认配置
+        saveDefaultConfigFile();
+        
+        // 补充缺失的配置项
         saveDefaultConfigs();
     }
 
@@ -87,6 +90,13 @@ public class ConfigManager {
         }
     }
 
+    private void saveDefaultConfigFile() {
+        File configFile = new File(plugin.getDataFolder(), "config.yml");
+        if (!configFile.exists()) {
+            saveResource("config.yml", "config.yml");
+        }
+    }
+
     private void saveDefaultConfigs() {
         // 主配置默认值
         setDefaultIfNotExists(config, "language", "zh_CN");
@@ -108,6 +118,9 @@ public class ConfigManager {
         setDefaultIfNotExists(config, "baidu-api.api-key", "your_api_key_here");
         setDefaultIfNotExists(config, "baidu-api.secret-key", "your_secret_key_here");
         setDefaultIfNotExists(config, "baidu-api.strategy-id", 1);
+        
+        // Redis配置默认值
+        setDefaultIfNotExists(config, "redis.password", "");
         config.save();
 
         // 语言文件默认值 - 现在由LanguageManager处理
