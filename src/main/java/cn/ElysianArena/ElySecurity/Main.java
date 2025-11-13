@@ -33,7 +33,10 @@ public class Main extends PluginBase {
 
     @Override
     public void onEnable() {
-        // 初始化管理器
+        saveResource("config.yml");
+        saveResource("lang/zh_CN.yml");
+        saveResource("lang/en_US.yml");
+        saveResource("prohibited-words.yml");
         this.configManager = new ConfigManager(this);
         this.languageManager = new LanguageManager(this);
         this.eventManager = new EventManager(this);
@@ -41,10 +44,8 @@ public class Main extends PluginBase {
         this.prohibitedWords = new ProhibitedWords(this);
         this.opManager = new OPManager(this);
 
-        // 注册事件
         eventManager.registerEvents();
-        
-        // 注册命令
+
         getServer().getCommandMap().register("op", new OPCommand(this, opManager));
 
         getLogger().info("  _____ _       ____                       _ _         \n" +
