@@ -1,0 +1,10 @@
+anti_spam:
+  warning: "&cPlease do not spam!"
+  kick_message: "&cKicked for spamming"
+  similarity_warning: "&cPlease do not send repetitive messages!"
+
+prohibited_words:
+  warning: "&cPlease do not send prohibited content!"
+  kick_message: "&cKicked for sending prohibited content"
+  mute_message: "&cYou have been muted for {duration} seconds"
+  muted: "&cYou are currently muted"

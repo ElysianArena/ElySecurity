@@ -1,0 +1,49 @@
+# 语言设置
+language: "zh_CN"
+
+# 反刷屏配置
+anti-spam:
+  enabled: true
+  message-interval: 1000
+  similarity-threshold: 0.8
+  entropy-threshold: 1.2
+  cache-size: 10
+  punishment: "warning"
+  warning-message: true
+
+# 违禁词配置
+prohibited-words:
+  enabled: true
+  # 检测模式: local(仅本地), baidu(仅百度), both(两者都用)
+  mode: "local"
+  # 是否拦截聊天
+  chat-interception: true
+  # 惩罚方式: warning, kick, mute
+  punishment: "warning"
+  # 禁言时长(秒)
+  mute-duration: 300
+
+# 百度API配置
+baidu-api:
+  enabled: false
+  api-key: "your_api_key_here"
+  secret-key: "your_secret_key_here"
+  strategy-id: 1
+
+# MySQL数据库配置
+mysql:
+  host: "localhost"
+  port: 3306
+  database: "elysecurity"
+  username: "root"
+  password: ""
+
+# Redis配置
+redis:
+  enabled: true
+  host: "localhost"
+  port: 6379
+  timeout: 2000
+  max-total: 10
+  max-idle: 5
+  min-idle: 1

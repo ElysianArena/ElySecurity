@@ -1,0 +1,10 @@
+anti_spam:
+  warning: "&c请不要刷屏!"
+  kick_message: "&c因刷屏被踢出服务器"
+  similarity_warning: "&c请不要发送重复内容!"
+
+prohibited_words:
+  warning: "&c请勿发送违规内容!"
+  kick_message: "&c因发送违规内容被踢出"
+  mute_message: "&c你已被禁言 {duration} 秒"
+  muted: "&c你正处于禁言状态"

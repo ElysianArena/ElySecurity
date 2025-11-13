@@ -1,0 +1,5 @@
+name: ElySecretly
+main: cn.ElysianArena.ElySecurity.Main
+version: 1.0.0
+api: [1.0.10]
+author: NemoCat砂猫
