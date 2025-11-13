@@ -34,6 +34,7 @@ public class Main extends PluginBase {
 
     @Override
     public void onEnable() {
+        this.saveDefaultConfig();
         this.configManager = new ConfigManager(this);
         this.languageManager = new LanguageManager(this);
         this.eventManager = new EventManager(this);
