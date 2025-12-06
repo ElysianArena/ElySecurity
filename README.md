@@ -1,365 +1,235 @@
-# ElySecurity
+# ElySecurity 服务器安全插件
 
-ElySecurity 是一个基于 Nukkit 服务器平台的多功能安全插件，提供反垃圾信息、违禁词过滤、OP权限管理等功能，保障服务器环境的安全与秩序。
+一个功能强大的 Minecraft Nukkit 服务器安全插件，提供全面的玩家管理和内容安全功能。
 
-## 功能特性
+## 🚀 功能特性
 
-### 1. 反垃圾信息 (Anti-Spam)
-- 控制消息发送间隔，防止刷屏
-- 检测重复或高度相似的消息
-- 基于信息熵算法识别无意义内容
-- 可自定义的惩罚机制（警告、踢出等）
+### 🔒 核心安全功能
+- **OP权限管理** - 数据库/文件双重存储模式
+- **权限状态同步** - 实时检测并同步玩家权限
+- **内容安全检测** - 支持本地和百度API双重检测
 
-### 2. 违禁词过滤系统
-- 本地违禁词库支持
-- 可选集成百度内容审核API进行云端检测
-- 支持多种检测模式：
-    - 仅本地检测
-    - 仅百度API检测
-    - 本地+百度API双重检测
-- 灵活的惩罚机制（警告、禁言、踢出）
-- 自动缓存机制提升性能
+### 🛡️ 反违规机制
+- **智能刷屏检测** - 基于消息间隔、相似度、信息熵的多维度检测
+- **违禁词过滤** - 本地词库 + 百度AI内容审核
+- **多种惩罚方式** - 警告、踢出、禁言等可配置惩罚
 
-### 3. OP权限管理系统
-- 将OP权限存储在MySQL数据库中，实现持久化管理
-- 可选Redis缓存支持，提高查询效率
-- 实时同步在线玩家的OP状态
-- 提供 `/op` 命令用于管理OP权限
+### ⚙️ 技术特性
+- **双存储模式** - 可选择MySQL数据库或YAML文件存储
+- **Redis缓存支持** - 高性能缓存加速
+- **多语言支持** - 中英文界面
+- **异步检测** - 不阻塞服务器主线程
 
-## API 文档
+## 📦 安装要求
 
-### 违禁词检测 API
+### 环境要求
+- **Nukkit API**: 1.0.10+
+- **Java**: 8+
+- **可选**: MySQL 5.7+ / Redis 5+
 
-#### 检查内容是否违规
-```java
-/**
- * 检查文本内容是否包含违禁词
- * @param playerName 玩家名称
- * @param content 要检查的文本内容
- * @return ViolationResult 违规检测结果
- */
-public ViolationResult checkContent(String playerName, String content)
-```
+### 依赖
+- **必须**: Nukkit 服务器
+- **可选**: MySQL驱动、Redis客户端
 
-#### ViolationResult 类说明
-```java
-public class ViolationResult {
-    private boolean violated;           // 是否违规
-    private int violationType;         // 违规类型ID
-    private int subType;               // 子类型
-    private List<String> violationDetails; // 违规详情(如命中的关键词)
-    private String source;             // 检测来源 local/baidu
-    private double confidence;         // 置信度
-    private String message;            // 附加消息
-    
-    // Getter 和 Setter 方法
-    public boolean isViolated() { ... }
-    public int getViolationType() { ... }
-    public List<String> getViolationDetails() { ... }
-    // ... 其他方法
-}
-```
+## ⚡ 快速开始
 
-#### 使用示例
-```java
-// 在其他插件中调用违禁词检测
-Main main = Main.getInstance();
-ProhibitedWords prohibitedWords = main.getProhibitedWords();
+### 1. 安装插件
+将 `ElySecurity.jar` 放入 `plugins/` 目录并重启服务器。
 
-ViolationResult result = prohibitedWords.checkContent(player.getName(), message);
-if (result.isViolated()) {
-    // 处理违规内容
-    player.sendMessage("检测到违规内容: " + result.getViolationDetails());
-}
-```
-
-### 禁言管理 API
-
-#### 禁言玩家
-```java
-/**
- * 禁言玩家
- * @param playerName 玩家名称
- * @param durationSeconds 禁言时长(秒)
- */
-public void mutePlayer(String playerName, int durationSeconds)
-```
-
-#### 解除禁言
-```java
-/**
- * 解除玩家禁言
- * @param playerName 玩家名称
- */
-public void unmutePlayer(String playerName)
-```
-
-#### 检查是否被禁言
-```java
-/**
- * 检查玩家是否被禁言
- * @param playerName 玩家名称
- * @return boolean 是否被禁言
- */
-public boolean isMuted(String playerName)
-```
-
-#### 获取剩余禁言时间
-```java
-/**
- * 获取玩家剩余禁言时间
- * @param playerName 玩家名称
- * @return long 剩余禁言时间(秒)
- */
-public long getMuteTimeLeft(String playerName)
-```
-
-### 本地违禁词管理 API
-
-#### 添加本地违禁词
-```java
-/**
- * 添加本地违禁词
- * @param word 要添加的违禁词
- */
-public void addLocalWord(String word)
-```
-
-#### 移除本地违禁词
-```java
-/**
- * 移除本地违禁词
- * @param word 要移除的违禁词
- */
-public void removeLocalWord(String word)
-```
-
-#### 获取所有本地违禁词
-```java
-/**
- * 获取所有本地违禁词
- * @return Set<String> 违禁词集合
- */
-public Set<String> getLocalWords()
-```
-
-#### 重新加载配置
-```java
-/**
- * 重新加载违禁词配置
- */
-public void reloadWords()
-```
-
-### OP权限管理 API
-
-#### 检查玩家OP状态
-```java
-/**
- * 检查玩家是否在数据库中有OP权限
- * @param username 玩家名称
- * @return boolean 是否有OP权限
- */
-public boolean isOpInDB(String username)
-```
-
-#### 添加OP权限
-```java
-/**
- * 添加玩家OP权限到数据库
- * @param username 玩家名称
- */
-public void addOpToDB(String username)
-```
-
-#### 移除OP权限
-```java
-/**
- * 从数据库移除玩家OP权限
- * @param username 玩家名称
- */
-public void removeOpFromDB(String username)
-```
-
-#### 获取所有OP玩家
-```java
-/**
- * 获取数据库中所有有OP权限的玩家
- * @return Set<String> OP玩家集合
- */
-public Set<String> getAllOpsFromDB()
-```
-
-#### 同步玩家OP状态
-```java
-/**
- * 同步所有在线玩家的OP状态
- */
-public void syncPlayerOpStatus()
-```
-
-### 语言管理 API
-
-#### 获取本地化消息
-```java
-/**
- * 获取本地化消息
- * @param key 消息键
- * @return String 本地化消息
- */
-public String getMessage(String key)
-
-/**
- * 获取本地化消息，带默认值
- * @param key 消息键
- * @param defaultValue 默认值
- * @return String 本地化消息
- */
-public String getMessage(String key, String defaultValue)
-```
-
-#### 设置当前语言
-```java
-/**
- * 设置当前语言
- * @param languageCode 语言代码 (如: zh_CN, en_US)
- */
-public void setCurrentLanguage(String languageCode)
-```
-
-#### 检查语言是否可用
-```java
-/**
- * 检查语言是否可用
- * @param languageCode 语言代码
- * @return boolean 是否可用
- */
-public boolean isLanguageAvailable(String languageCode)
-```
-
-#### 重新加载语言配置
-```java
-/**
- * 重新加载所有语言配置
- */
-public void reloadLanguages()
-```
-
-### 集成示例
-
-#### 在其他插件中集成 ElySecurity
-```java
-public class YourPlugin extends PluginBase {
-    
-    private Main elySecurity;
-    
-    @Override
-    public void onEnable() {
-        // 获取ElySecurity实例
-        elySecurity = Main.getInstance();
-        
-        if (elySecurity != null) {
-            // 使用违禁词检测
-            ProhibitedWords pw = elySecurity.getProhibitedWords();
-            ViolationResult result = pw.checkContent("testPlayer", "测试消息");
-            
-            // 使用禁言功能
-            pw.mutePlayer("badPlayer", 300); // 禁言5分钟
-            
-            // 使用语言管理
-            String message = elySecurity.getLanguageManager().getMessage("anti_spam.warning");
-        }
-    }
-}
-```
-
-## 配置说明
-
-### 主配置文件 (config.yml)
+### 2. 基础配置
+编辑 `plugins/ElySecurity/config.yml`:
 
 ```yaml
-# 语言设置
-language: "zh_CN"
+# 基本设置
+language: "zh_CN"  # 语言: zh_CN / en_US
 
-# 反刷屏配置
-anti-spam:
-  enabled: true
-  message-interval: 1000           # 消息最小间隔(毫秒)
-  similarity-threshold: 0.8        # 相似度阈值
-  entropy-threshold: 1.2           # 信息熵阈值
-  cache-size: 10                   # 聊天历史缓存数量
-  punishment: "warning"            # 惩罚方式: warning, kick
-  warning-message: true            # 是否显示警告消息
-
-# 违禁词配置
-prohibited-words:
-  enabled: true
-  # 检测模式: local(仅本地), baidu(仅百度), both(两者都用)
-  mode: "local"
-  # 是否拦截聊天
-  chat-interception: true
-  # 惩罚方式: warning, kick, mute
-  punishment: "warning"
-  # 禁言时长(秒)
-  mute-duration: 300
-
-# 百度API配置
-baidu-api:
-  enabled: false
-  api-key: "your_api_key_here"
-  secret-key: "your_secret_key_here"
-  strategy-id: 1
-
-# MySQL数据库配置
+# 存储模式选择
 mysql:
+  enabled: false   # 关闭MySQL，使用文件存储
+```
+
+### 3. 添加管理员
+在控制台执行：
+```bash
+op add 你的游戏ID
+```
+
+## 🛠️ 配置说明
+
+### 存储模式配置
+
+#### 方案A：使用文件存储（简单）
+```yaml
+mysql:
+  enabled: false
+```
+
+OP列表将保存在：`plugins/ElySecurity/admin.yml`
+
+#### 方案B：使用数据库存储（推荐）
+```yaml
+mysql:
+  enabled: true
   host: "localhost"
   port: 3306
   database: "elysecurity"
   username: "root"
-  password: ""
+  password: "your_password"
+```
 
-# Redis配置
+### 安全功能配置
+
+#### 反刷屏设置
+```yaml
+anti-spam:
+  enabled: true
+  message-interval: 1000  # 消息间隔(ms)
+  similarity-threshold: 0.8  # 相似度阈值
+  punishment: "kick"  # 惩罚方式: warning/kick
+```
+
+#### 违禁词设置
+```yaml
+prohibited-words:
+  enabled: true
+  mode: "local"  # local/baidu/both
+  punishment: "mute"  # 惩罚方式: warning/kick/mute
+  mute-duration: 300  # 禁言时长(秒)
+```
+
+## 📋 命令列表
+
+| 命令 | 权限 | 描述 | 使用示例 |
+|------|------|------|----------|
+| `/op add <玩家>` | elysecurity.op | 添加OP权限 | `/op add Steve` |
+| `/op remove <玩家>` | elysecurity.op | 移除OP权限 | `/op remove Alex` |
+
+> ⚠️ 注意：OP命令只能在服务器控制台执行
+
+## 📁 文件结构
+
+```
+plugins/ElySecurity/
+├── config.yml              # 主配置文件
+├── admin.yml              # OP列表（文件模式）
+├── prohibited-words.yml   # 违禁词库
+├── lang/
+│   ├── zh_CN.yml         # 中文语言文件
+│   └── en_US.yml         # 英文语言文件
+└── logs/                 # 日志目录
+```
+
+## 🔧 高级功能
+
+### Redis缓存加速
+```yaml
 redis:
   enabled: true
   host: "localhost"
   port: 6379
-  timeout: 2000
-  max-total: 10
-  max-idle: 5
-  min-idle: 1
+  password: ""
 ```
 
-### 违禁词配置 (prohibited-words.yml)
-
+### 百度AI内容审核
 ```yaml
-# 本地违禁词列表
-local-words:
-  - "脏话1"
-  - "脏话2"
-  - "敏感词1"
-  - "敏感词2"
-  - "违规词1"
+baidu-api:
+  enabled: true
+  api-key: "your_api_key"
+  secret-key: "your_secret_key"
 ```
 
-## 安装说明
+### 自定义违禁词
+编辑 `prohibited-words.yml`：
+```yaml
+local-words:
+  - "违规词1"
+  - "违规词2"
+  - "违规词3"
+```
 
-1. 将编译好的插件 `.jar` 文件放入服务器的 `plugins` 目录
-2. 启动服务器以生成配置文件
-3. 根据需要修改 `config.yml` 和 `prohibited-words.yml` 配置文件
-4. 重启服务器使配置生效
+## ❓ 常见问题
 
-## 使用说明
+### Q1: 插件无法加载？
+- 检查Nukkit版本是否≥1.0.10
+- 检查Java版本是否≥8
+- 查看服务器日志获取详细错误信息
 
-### 命令
+### Q2: OP权限不同步？
+- 确保存储模式配置正确
+- 检查数据库连接（如果使用MySQL）
+- 尝试重新执行OP命令
 
-- `/op add/remove <player>` - 给予/移除玩家OP权限（控制台）
+### Q3: 如何备份OP列表？
+- **文件模式**: 备份 `admin.yml`
+- **数据库模式**: 备份MySQL的`ops`表
 
-### 权限节点
+### Q4: 如何更新插件？
+1. 备份配置文件
+2. 替换插件JAR文件
+3. 重启服务器
+4. 检查配置兼容性
 
-- `elysecurity.op` - 使用OP相关命令的权限
+## 📊 性能优化建议
 
-![bStats](https://bstats.org/signatures/bukkit/ElySecurity.svg)
+1. **小规模服务器**: 使用文件存储模式
+2. **中大型服务器**: 使用MySQL+Redis组合
+3. **调整检测阈值**: 根据服务器负载调整检测灵敏度
+4. **定期清理缓存**: 长时间运行后重启释放内存
 
-## 许可证
+## 🤝 贡献与支持
 
-本项目根据 MIT 许可证发布 - 查看 [LICENSE](LICENSE) 文件了解详情。
+### 问题反馈
+遇到问题请提供：
+1. Nukkit版本
+2. 插件版本
+3. 错误日志截图
+4. 复现步骤
+
+### 功能建议
+欢迎通过GitHub Issues提交功能建议。
+
+## 📄 许可证
+
+本项目采用 MIT 许可证。详见 LICENSE 文件。
+
+## 🔌 API 调用
+
+### 百度内容审核 API
+
+其他插件可以通过以下方式调用本插件的百度内容审核功能：
+
+```java
+// 获取ElySecurity插件实例
+PluginBase elySecurity = getServer().getPluginManager().getPlugin("ElySecurity");
+
+// 检查内容是否违规
+if (elySecurity instanceof cn.ElysianArena.ElySecurity.Main) {
+    cn.ElysianArena.ElySecurity.Main main = (cn.ElysianArena.ElySecurity.Main) elySecurity;
+    cn.ElysianArena.ElySecurity.security.ViolationResult result = main.getProhibitedWords().checkContent(playerName, content);
+    
+    if (result.isViolated()) {
+        // 处理违规内容
+        String source = result.getSource(); // 违规来源 (local/baidu)
+        List<String> details = result.getViolationDetails(); // 违规详情
+        double confidence = result.getConfidence(); // 置信度
+    }
+}
+```
+
+返回的 ViolationResult 对象包含以下字段：
+- `violated`: 是否违规
+- `violationType`: 违规类型ID
+- `subType`: 子类型
+- `violationDetails`: 违规详情(如命中的关键词)
+- `source`: 检测来源 (local/baidu)
+- `confidence`: 置信度
+- `message`: 附加消息
+
+## ✨ 更新日志
+
+### v1.0.0
+- ✅ OP权限管理
+- ✅ 反刷屏系统
+- ✅ 违禁词过滤
+- ✅ 双存储模式支持
+- ✅ 多语言界面
