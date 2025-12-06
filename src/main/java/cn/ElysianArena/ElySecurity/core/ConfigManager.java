@@ -14,6 +14,7 @@ public class ConfigManager {
     private Config config;
     private Config languageConfig;
     private Config prohibitedWordsConfig;
+    private Config adminConfig;
 
     public ConfigManager(PluginBase plugin) {
         this.plugin = plugin;
@@ -41,6 +42,7 @@ public class ConfigManager {
             this.languageConfig = new Config(new File(plugin.getDataFolder(), "lang/zh_CN.yml"), Config.YAML);
         }
         this.prohibitedWordsConfig = new Config(new File(plugin.getDataFolder(), "prohibited-words.yml"), Config.YAML);
+        this.adminConfig = new Config(new File(plugin.getDataFolder(), "admin.yml"), Config.YAML);
         saveDefaultConfigs();
     }
 
@@ -49,6 +51,7 @@ public class ConfigManager {
         saveResourceIfNotExists("lang/zh_CN.yml", "lang/zh_CN.yml");
         saveResourceIfNotExists("lang/en_US.yml", "lang/en_US.yml");
         saveResourceIfNotExists("prohibited-words.yml", "prohibited-words.yml");
+        saveResourceIfNotExists("admin.yml", "admin.yml");
     }
 
     private void saveResourceIfNotExists(String resourcePath, String outputPath) {
@@ -84,6 +87,7 @@ public class ConfigManager {
         setDefaultIfNotExists(config, "baidu-api.api-key", "your_api_key_here");
         setDefaultIfNotExists(config, "baidu-api.secret-key", "your_secret_key_here");
         setDefaultIfNotExists(config, "baidu-api.strategy-id", 1);
+        setDefaultIfNotExists(config, "mysql.enabled", true);
         setDefaultIfNotExists(config, "mysql.host", "localhost");
         setDefaultIfNotExists(config, "mysql.port", 3306);
         setDefaultIfNotExists(config, "mysql.database", "elysecurity");
@@ -105,6 +109,11 @@ public class ConfigManager {
         );
         setDefaultIfNotExists(prohibitedWordsConfig, "local-words", defaultWords);
         prohibitedWordsConfig.save();
+
+        // 默认的admin配置
+        List<String> defaultAdmins = Arrays.asList("Admin1", "Admin2");
+        setDefaultIfNotExists(adminConfig, "ops", defaultAdmins);
+        adminConfig.save();
     }
 
     private void setDefaultIfNotExists(Config config, String key, Object value) {
@@ -123,6 +132,10 @@ public class ConfigManager {
 
     public Config getProhibitedWordsConfig() {
         return prohibitedWordsConfig;
+    }
+
+    public Config getAdminConfig() {
+        return adminConfig;
     }
 
     public void reloadConfigs() {

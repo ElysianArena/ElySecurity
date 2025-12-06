@@ -4,31 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fcaacdfd-9261-4c60-9e9e-1206edda5a93" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/core/ConfigManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/core/EventManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/core/LanguageManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/security/AntiSpam.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/security/BaiduViolation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/security/ChatAnalyzer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/security/ProhibitedWords.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/security/SecurityModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/security/ViolationResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/utils/BaiduContentModeration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/utils/EntropyCalculator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/cn/ElysianArena/ElySecurity/utils/SimilarityCalculator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/lang/en_US.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/lang/zh_CN.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/prohibited-words.yml" afterDir="false" />
-    </list>
+    <list default="true" id="fcaacdfd-9261-4c60-9e9e-1206edda5a93" name="更改" comment="修复空指针，更新一点小玩意" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,9 +20,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="35CBqqvZvDibNvJAiAesjqVz54w" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -57,6 +36,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Maven.ElySecurity [package].executor": "Run",
+    "Maven.ElySecurity [test].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
@@ -73,6 +54,62 @@
       <option name="presentableId" value="Default" />
       <updated>1762604367559</updated>
     </task>
+    <task id="LOCAL-00001" summary="upload">
+      <option name="closed" value="true" />
+      <created>1763029140001</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1763029140001</updated>
+    </task>
+    <task id="LOCAL-00002" summary="补一下（">
+      <option name="closed" value="true" />
+      <created>1763029224141</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1763029224141</updated>
+    </task>
+    <task id="LOCAL-00003" summary="保存配置">
+      <option name="closed" value="true" />
+      <created>1763031057982</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1763031057982</updated>
+    </task>
+    <task id="LOCAL-00004" summary="修复空指针，更新一点小玩意">
+      <option name="closed" value="true" />
+      <created>1763033898514</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1763033898514</updated>
+    </task>
+    <task id="LOCAL-00005" summary="修复空指针，更新一点小玩意">
+      <option name="closed" value="true" />
+      <created>1763033957798</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1763033957798</updated>
+    </task>
+    <task id="LOCAL-00006" summary="修复空指针，更新一点小玩意">
+      <option name="closed" value="true" />
+      <created>1763035653592</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1763035653592</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="upload" />
+    <MESSAGE value="补一下（" />
+    <MESSAGE value="保存配置" />
+    <MESSAGE value="修复空指针，更新一点小玩意" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复空指针，更新一点小玩意" />
   </component>
 </project>

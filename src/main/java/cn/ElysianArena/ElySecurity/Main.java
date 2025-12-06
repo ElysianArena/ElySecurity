@@ -1,17 +1,14 @@
 package cn.ElysianArena.ElySecurity;
 
+import cn.ElysianArena.ElySecurity.commands.OPCommand;
 import cn.ElysianArena.ElySecurity.core.ConfigManager;
 import cn.ElysianArena.ElySecurity.core.EventManager;
 import cn.ElysianArena.ElySecurity.core.LanguageManager;
-import cn.ElysianArena.ElySecurity.commands.OPCommand;
 import cn.ElysianArena.ElySecurity.core.OPManager;
 import cn.ElysianArena.ElySecurity.security.AntiSpam;
 import cn.ElysianArena.ElySecurity.security.ProhibitedWords;
 import cn.ElysianArena.ElySecurity.utils.MetricsLite;
 import cn.nukkit.plugin.PluginBase;
-
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class Main extends PluginBase {
     private static Main instance;
@@ -25,10 +22,12 @@ public class Main extends PluginBase {
     @Override
     public void onLoad() {
         instance = this;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            getLogger().warning("未能加载MySQL驱动: " + e.getMessage());
+        if (this.getConfig().getBoolean("mysql.enabled", true)) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            } catch (ClassNotFoundException e) {
+                getLogger().warning("未能加载MySQL驱动: " + e.getMessage());
+            }
         }
     }
 
@@ -58,6 +57,7 @@ public class Main extends PluginBase {
                 " |_____|_|\\__, |____/ \\___|\\___|\\__,_|_|  |_|\\__|\\__, |\n" +
                 "          |___/                                  |___/ " +
                 "Author: NemoCat");
+        getLogger().info("Version:" + getDescription().getVersion());
     }
 
     @Override
@@ -94,7 +94,7 @@ public class Main extends PluginBase {
     public ProhibitedWords getProhibitedWords() {
         return prohibitedWords;
     }
-    
+
     public OPManager getOPManager() {
         return opManager;
     }

@@ -1,7 +1,7 @@
 # 语言设置
 language: "zh_CN"
 
-# 反刷屏配置
+  # 反刷屏配置
 anti-spam:
   enabled: true
   message-interval: 1000
@@ -11,7 +11,7 @@ anti-spam:
   punishment: "warning"
   warning-message: true
 
-# 违禁词配置
+  # 违禁词配置
 prohibited-words:
   enabled: true
   # 检测模式: local(仅本地), baidu(仅百度), both(两者都用)
@@ -25,22 +25,23 @@ prohibited-words:
   # 是否自动将百度命中的违禁词添加到本地词库
   auto-add-baidu-words: false
 
-# 百度API配置
+  # 百度API配置
 baidu-api:
   enabled: false
   api-key: "your_api_key_here"
   secret-key: "your_secret_key_here"
   strategy-id: 1
 
-# MySQL数据库配置
+  # MySQL数据库配置
 mysql:
+  enabled: true  # MySQL开关
   host: "localhost"
   port: 3306
   database: "elysecurity"
   username: "root"
   password: ""
 
-# Redis配置
+  # Redis配置
 redis:
   enabled: false
   host: "localhost"
